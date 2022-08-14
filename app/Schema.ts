@@ -10,6 +10,12 @@ const Schema = gql`
     getAllPeople: [Person]
     getPerson(id: Int): Person 
   }
+
+  type Mutation {
+    #the addPerson commmand will accept an argument of type String.
+    #it will return a 'Person' instance. 
+    addPerson(name: String): Person
+  }
 `;
 export default Schema; 
 //export this Schema so we can use it in our project
