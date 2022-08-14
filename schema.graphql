@@ -5,3 +5,10 @@
 type Query {
   ok: Boolean!
 }
+
+type User {
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
+}

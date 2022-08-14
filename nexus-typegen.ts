@@ -29,6 +29,12 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Query: {};
+  User: { // root type
+    email: string; // String!
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -45,11 +51,23 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     ok: boolean; // Boolean!
   }
+  User: { // field return type
+    email: string; // String!
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+  }
 }
 
 export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     ok: 'Boolean'
+  }
+  User: { // field return type name
+    email: 'String'
+    firstName: 'String'
+    id: 'Int'
+    lastName: 'String'
   }
 }
 

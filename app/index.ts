@@ -1,9 +1,10 @@
 import { ApolloServer } from "apollo-server";
-
-// 1
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core/dist/plugin/landingPage/graphqlPlayground';
+// src
 import { schema } from "./schema";
 export const server = new ApolloServer({
     schema,
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 
 const port = 3000;
