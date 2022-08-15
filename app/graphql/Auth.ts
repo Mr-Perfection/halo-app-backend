@@ -1,7 +1,7 @@
 import { objectType, extendType, nonNull, stringArg } from "nexus";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { APP_SECRET } from "../utils/auth";
+import { APP_SECRET, isValidPassword } from "../utils/auth";
 
 export const AuthPayload = objectType({
     name: "AuthPayload",
@@ -26,7 +26,7 @@ export const AuthMutation = extendType({
                 const user = await context.prisma.user.findFirstOrThrow({
                     where: { email: args.email },
                 });
-
+                
                 const valid = await bcrypt.compare(
                     args.password,
                     user.password,
@@ -51,11 +51,14 @@ export const AuthMutation = extendType({
                 lastName: nonNull(stringArg()),
             },
             async resolve(parent, args, context) {
-                const { email, firstName, lastName } = args;
+                const { email, firstName, lastName, password } = args;
+                if (!isValidPassword(password)) {
+                    throw new Error("Min 8 letter password, with at least a symbol, upper and lower case letters and a number.");
+                } 
                 // Encrypt password.
-                const password = await bcrypt.hash(args.password, 10);
+                const hashedPassword = await bcrypt.hash(password, 10);
                 const user = await context.prisma.user.create({
-                    data: { email, firstName, lastName, password },
+                    data: { email, firstName, lastName, password: hashedPassword },
                 });
 
                 const token = jwt.sign({ userId: user.id }, APP_SECRET);
