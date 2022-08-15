@@ -23,12 +23,9 @@ export const AuthMutation = extendType({
                 password: nonNull(stringArg()),
             },
             async resolve(parent, args, context) {
-                const user = await context.prisma.user.findUnique({
+                const user = await context.prisma.user.findFirstOrThrow({
                     where: { email: args.email },
                 });
-                if (!user) {
-                    throw new Error("No such user found");
-                }
 
                 const valid = await bcrypt.compare(
                     args.password,
