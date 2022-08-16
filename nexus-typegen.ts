@@ -34,6 +34,9 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Query: {};
+  Ticket: { // root type
+    context: string; // String!
+  }
   User: { // root type
     email: string; // String!
     firstName: string; // String!
@@ -62,7 +65,10 @@ export interface NexusGenFieldTypes {
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
-    users: NexusGenRootTypes['User'][]; // [User!]!
+    getTicketContext: NexusGenRootTypes['Ticket']; // Ticket!
+  }
+  Ticket: { // field return type
+    context: string; // String!
   }
   User: { // field return type
     email: string; // String!
@@ -82,7 +88,10 @@ export interface NexusGenFieldTypeNames {
     signup: 'AuthPayload'
   }
   Query: { // field return type name
-    users: 'User'
+    getTicketContext: 'Ticket'
+  }
+  Ticket: { // field return type name
+    context: 'String'
   }
   User: { // field return type name
     email: 'String'
@@ -103,6 +112,11 @@ export interface NexusGenArgTypes {
       firstName: string; // String!
       lastName: string; // String!
       password: string; // String!
+    }
+  }
+  Query: {
+    getTicketContext: { // args
+      queries: string; // String!
     }
   }
 }

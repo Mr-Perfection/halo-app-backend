@@ -13,7 +13,11 @@ type Mutation {
 }
 
 type Query {
-  users: [User!]!
+  getTicketContext(queries: String!): Ticket!
+}
+
+type Ticket {
+  context: String!
 }
 
 type User {
