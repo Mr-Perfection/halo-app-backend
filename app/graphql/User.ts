@@ -12,23 +12,15 @@ export const User = objectType({
     },
 });
 
-let users: NexusGenObjects["User"][]= [   // 1
-    {
-        id: 1,
-        firstName: "Steph",
-        lastName: "Lee",
-        email: "stephenslee0127@gmail.com"
-    },
-];
-
-export const UserQuery = extendType({ 
-    type: "Query",
-    definition(t) {
-        t.nonNull.list.nonNull.field("users", {
-            type: "User",
-            resolve(parent, args, context, info) {
-                return users;
-            },
-        });
-    },
-});
+// export const UserQuery = extendType({ 
+//     type: "Query",
+//     definition(t) {
+//         t.nonNull.list.nonNull.field("users", {
+//             type: "User",
+//             resolve(parent, args, context, info) {
+//                 const users = await context.prisma.user.)
+//                 return users;
+//             },
+//         });
+//     },
+// });
