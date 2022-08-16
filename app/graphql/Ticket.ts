@@ -8,7 +8,7 @@ export const Ticket = objectType({
   },
 });
 
-// Get basic data of the ticket information which provides context.
+// Get the contextual information about the ticket.
 export const TicketQuery = extendType({
   type: "Query",
   definition(t) {

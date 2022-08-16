@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --coverage",
     "dev": "ts-node-dev --transpile-only --no-notify --exit-child app/index.ts",
-    "generate": "ts-node --transpile-only app/schema.ts"
+    "generate": "ts-node --transpile-only app/schema.ts",
+    "prisma": "npx prisma migrate dev --name"
   },
   "repository": {
     "type": "git",
