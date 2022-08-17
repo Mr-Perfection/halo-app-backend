@@ -19,15 +19,16 @@ export const TicketQuery = extendType({
       },
       async resolve(parent, args, context, info) {
         // postgresql://customer_db_user:customer_db_password@localhost:5433/postgres
-        const credentials = {
-          user: "customer_db_user",
-          host: "localhost",
-          database: "postgres",
-          password: "customer_db_password",
-          port: 5433,
-        };
+        // const credentials = {
+        //   user: "customer_db_user",
+        //   host: "localhost",
+        //   database: "postgres",
+        //   password: "customer_db_password",
+        //   port: 5433,
+        // };
+        const connectionString = "postgresql://customer_db_user:customer_db_password@localhost:5433/postgres"
         const {queries} = args;
-        const client = new Client(credentials);
+        const client = new Client({connectionString });
         await client.connect();
         const res = await client.query(queries)
         return { context: JSON.stringify(res.rows)};

@@ -7,13 +7,21 @@ type AuthPayload {
   user: User!
 }
 
+type Customer {
+  createdAt: String!
+  id: Int!
+  slug: String!
+}
+
 type Mutation {
+  createCustomer(slug: String!): Customer!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, firstName: String!, lastName: String!, password: String!): AuthPayload!
 }
 
 type Query {
   getTicketContext(queries: String!): Ticket!
+  getUsers: [User!]!
 }
 
 type Ticket {

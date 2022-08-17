@@ -1,4 +1,4 @@
-import { extendType, objectType } from "nexus";
+import { objectType, extendType, nonNull, stringArg } from "nexus";
 // src
 import { NexusGenObjects } from "../../nexus-typegen";  
 
@@ -12,15 +12,15 @@ export const User = objectType({
     },
 });
 
-// export const UserQuery = extendType({ 
-//     type: "Query",
-//     definition(t) {
-//         t.nonNull.list.nonNull.field("users", {
-//             type: "User",
-//             resolve(parent, args, context, info) {
-//                 const users = await context.prisma.user.)
-//                 return users;
-//             },
-//         });
-//     },
-// });
+export const UserQuery = extendType({ 
+    type: "Query",
+    definition(t) {
+        t.nonNull.list.nonNull.field("getUsers", {
+            type: "User",
+            async resolve(parent, args, context, info) {
+                const users = await context.prisma.user.findMany()
+                return users;
+            },
+        });
+    },
+});
