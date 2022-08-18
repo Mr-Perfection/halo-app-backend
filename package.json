@@ -7,8 +7,13 @@
     "test": "jest --coverage",
     "dev": "ts-node-dev --transpile-only --no-notify --exit-child app/index.ts",
     "generate": "ts-node --transpile-only app/schema.ts",
-    "stage-migrate": "npx prisma db push",
-    "migrate": "npx prisma migrate dev --name"
+    "migrate:stage": "npx prisma db push",
+    "build": "tsc",
+    "migrate": "npx prisma migrate dev --name",
+    "prisma": "npx prisma generate",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "start:prod": "node dist/app/index.js",
+    "start:migrate:prod": "npm run migrate:deploy && npm run start:prod"
   },
   "repository": {
     "type": "git",
