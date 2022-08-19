@@ -14,10 +14,23 @@ Yarn v1.22.17
 yarn install
 ```
 
-# Running locally
+# Running locally (not Docker).
+Use this during development. This command auto-generate the schema and such.
+If you are running docker, it conflicts with `port 4000`. You can temporarily change it to
+`4001` in `app/index.ts` to see the changes.
 ```bash
 yarn run dev # This also auto-generate the GraphQL schema.
 ```
+
+**Use the Apollo's sandbox url: https://studio.apollographql.com/sandbox/explorer for auto-complete and other rich features.**
+
+
+# Visualize the DB with TablePlus
+- Install TablePlus (Mac)
+- Paste this url `postgresql://customer_db_user:customer_db_password@localhost:5432/postgres?schema=public` into 
+the browser. This is our test db for our customer. Use TablePlus to dump the data here if needed.
+- Our test app db url is `postgresql://db_user:db_password@localhost:5432/postgres?schema=public`. You can see the changes
+that we make in there.
 
 # DB Migrations
 ```bash
@@ -25,16 +38,18 @@ yarn run migrate:stage # Migrate without creating migrations
 yarn run migrate # To run the migrations
 ```
 
-# How to run fake customer DB locally
-Follow the README in test-customer-db/README.md.
-
-# Running www-backend service with Docker. 
+# Running www-backend service with Docker locally.
+- Install docker desktop. Use it to check the container status. You can run `docker ps` as well as other docker commands.
 ```sh
 docker build -t www-backend .
-# For M1 Macbook (ARM-based)
 
+# Recommended: Run docker-compose.
+docker-compose up -d
+# If you need to rebuild run:
+docker-compose up --build --force-recreate -d
+
+# If you just want to run api, run this command.
 docker run -p 4000:4000 --env-file .env -d
-
 ```
 
 # AWS

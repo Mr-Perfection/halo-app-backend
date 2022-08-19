@@ -17,11 +17,26 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres-vol:/var/lib/postgresql/data
     ports:
       - '5432:5432'
     env_file:
       - .env
+
+  customer-postgres:
+    image: postgres:14.5
+    container_name: customer_db
+    restart: always
+    environment:
+      - POSTGRES_USER=customer_db_user
+      - POSTGRES_PASSWORD=customer_db_password
+    volumes:
+      - customer-postgres-vol:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
 volumes:
-  postgres:
+  postgres-vol:
     name: www-backend-db
+  customer-postgres-vol:
+    name: www-backend-customer-postgres

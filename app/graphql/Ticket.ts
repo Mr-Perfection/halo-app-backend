@@ -26,7 +26,7 @@ export const TicketQuery = extendType({
         //   password: "customer_db_password",
         //   port: 5433,
         // };
-        const connectionString = "postgresql://customer_db_user:customer_db_password@customer_db:5433/postgres"
+        const connectionString = "postgresql://customer_db_user:customer_db_password@customer_db:5432/postgres?schema=public"
         const {queries} = args;
         const client = new Client({connectionString });
         await client.connect();
