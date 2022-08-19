@@ -55,3 +55,9 @@ docker run -p 4000:4000 --env-file .env -d
 # AWS
 aws-cli/2.2.43 Python/3.8.8 Darwin/21.6.0 exe/x86_64 prompt/off
 copilot version: v1.21.0
+
+# Deployment
+```sh
+# Deploy graphql service
+copilot deploy --name graphql
+```
