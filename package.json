@@ -11,9 +11,9 @@
     "build": "tsc",
     "migrate": "npx prisma migrate dev --name",
     "prisma": "npx prisma generate",
-    "migrate:deploy": "npx prisma migrate deploy",
+    "migrate:deploy": "scripts/set-db-url.sh && npx prisma migrate deploy",
     "start:prod": "node dist/app/index.js",
-    "start:migrate:prod": "npm run migrate:deploy && npm run start:prod"
+    "start:migrate:prod": "yarn run migrate:deploy && yarn run start:prod"
   },
   "repository": {
     "type": "git",
