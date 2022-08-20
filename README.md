@@ -41,13 +41,12 @@ yarn run migrate # To run the migrations
 # Running www-backend service with Docker locally.
 - Install docker desktop. Use it to check the container status. You can run `docker ps` as well as other docker commands.
 ```sh
-docker build -t www-backend .
-
+# Dockerfile is used for deployment. Use Dockerfile.dev instead.
+docker build -f Dockerfile.dev -t www-backend . --no-cache
 # Recommended: Run docker-compose.
 docker-compose up -d
 # If you need to rebuild run:
 docker-compose up --build --force-recreate -d
-
 # If you just want to run api, run this command.
 docker run -p 4000:4000 --env-file .env -d
 ```
