@@ -39,7 +39,7 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 type Mutation {
   createCustomer(slug: String!): Customer!
   login(email: String!, password: String!): AuthPayload!
-  signup(email: String!, firstName: String!, lastName: String!, password: String!): AuthPayload!
+  signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
 }
 
 type Query {
@@ -57,4 +57,11 @@ type User {
   firstName: String!
   id: Int!
   lastName: String!
+  role: UserRole!
+}
+
+"""Roles that determine what permissions the user has access to."""
+enum UserRole {
+  ADMIN
+  OPERATOR
 }
