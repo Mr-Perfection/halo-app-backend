@@ -42,6 +42,7 @@ yarn run migrate # To run the migrations
 - Install docker desktop. Use it to check the container status. You can run `docker ps` as well as other docker commands.
 ```sh
 # Dockerfile is used for deployment. Use Dockerfile.dev instead.
+# Comment out www-backend-api container part in dockerfile.dev if you want to run backend apis locally with the yarn script.
 docker build -f Dockerfile.dev -t www-backend . --no-cache
 # Recommended: Run docker-compose.
 docker-compose up -d

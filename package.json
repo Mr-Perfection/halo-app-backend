@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "dev": "ts-node-dev --transpile-only --no-notify --exit-child app/index.dev.ts",
+    "dev": "ts-node-dev --transpile-only --no-notify --exit-child app/index.ts",
     "generate": "ts-node --transpile-only app/schema.ts",
     "migrate:stage": "npx prisma db push",
     "build": "tsc",
