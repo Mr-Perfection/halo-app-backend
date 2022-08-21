@@ -60,3 +60,17 @@ copilot version: v1.21.0
 # Deploy graphql service
 copilot deploy --name graphql
 ```
+
+# Nexus Prisma Plugin (TBD)
+https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039
+Currently, plugin is way behind the current version of Prisma (v4.x.x).
+Benefit of using this is we don't have to manually define models from Prisma to nexus
+every time we create new model or update it... Hopefully, they release latest plugin.
+It will save dev time.
+https://nexusjs.org/docs/plugins/prisma/overview#about
+
+# .env template
+```sh
+DATABASE_URL= # After running docker containers for databases only, you can grab thr URL. i.e. postgresql://db_user:db_password@localhost:5432/postgres?schema=public
+APP_SECRET= # can be anything!
+```

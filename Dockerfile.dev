@@ -8,6 +8,7 @@ RUN apt-get install -y openssl
 COPY package*.json ./
 RUN yarn
 COPY . .
+ADD ./.env.dev ./.env
 RUN yarn run build
 RUN yarn run prisma
 
