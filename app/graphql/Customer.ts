@@ -36,7 +36,7 @@ export const CustomerMutation = extendType({
       async resolve(parent, args, context) {
         const { slug } = args;
         const customer = await context.prisma.customer.create({
-          data: { slug },
+          data: { slug: slug.replace(/ /g,'').toUpperCase() },
         });
         return customer;
       },
