@@ -69,8 +69,18 @@ every time we create new model or update it... Hopefully, they release latest pl
 It will save dev time.
 https://nexusjs.org/docs/plugins/prisma/overview#about
 
+
+# TBD Apollo Studio
+## Why?
+It provides the changelogs of APIs, data privacy, etc https://www.apollographql.com/docs/federation/managed-federation/overview/. Not high priority but something to consider as the team gets bigger.
+
+## Setup
+https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-graphs-to-apollo-studio
+
+
 # .env template
 ```sh
 DATABASE_URL= # After running docker containers for databases only, you can grab thr URL. i.e. postgresql://db_user:db_password@localhost:5432/postgres?schema=public
 APP_SECRET= # can be anything!
+
 ```
