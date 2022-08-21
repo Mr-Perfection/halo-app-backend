@@ -1,6 +1,4 @@
-import { extendType, nonNull, objectType, queryField, queryType, stringArg } from "nexus";
-// src
-import { NexusGenObjects } from "../../nexus-typegen";
+import { extendType, nonNull, objectType, stringArg } from "nexus";
 
 export const Customer = objectType({
   name: "Customer",
