@@ -1,7 +1,9 @@
 import { objectType, extendType, nonNull, stringArg } from "nexus";
 import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
-import { APP_SECRET, isValidPassword, REFRESH_TOKEN_SECRET } from "../utils/auth";
+import {
+  isValidPassword,
+  setTokens,
+} from "../utils/auth";
 
 export const AuthPayload = objectType({
   name: "AuthPayload",
@@ -34,14 +36,7 @@ export const AuthMutation = extendType({
           throw new Error("Invalid password");
         }
 
-        const token = jwt.sign(user, APP_SECRET, { expiresIn: '5m'});
-        const refreshToken = jwt.sign(user, REFRESH_TOKEN_SECRET, { expiresIn: '12h'})
-
-        return {
-          token,
-          refreshToken,
-          user,
-        };
+        return { ...setTokens(user), user };
       },
     });
     t.nonNull.field("signup", {
@@ -81,11 +76,7 @@ export const AuthMutation = extendType({
           },
         });
 
-        const token = jwt.sign({ userId: user.id }, APP_SECRET);
-        return {
-          token,
-          user,
-        };
+        return { ...setTokens(user), user };
       },
     });
   },
