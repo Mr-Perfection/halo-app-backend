@@ -13,6 +13,7 @@ export const AuthPayload = objectType({
   },
 });
 
+// TODO: need to improve security by creating a refresh token.
 export const AuthMutation = extendType({
   type: "Mutation",
   definition(t) {
