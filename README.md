@@ -82,6 +82,5 @@ https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-graphs-t
 # .env template
 ```sh
 DATABASE_URL= # After running docker containers for databases only, you can grab thr URL. i.e. postgresql://db_user:db_password@localhost:5432/postgres?schema=public
-APP_SECRET= # can be anything!
 
 ```

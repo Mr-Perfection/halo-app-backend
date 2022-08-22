@@ -1,12 +1,13 @@
 import { objectType, extendType, nonNull, stringArg } from "nexus";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { APP_SECRET, isValidPassword } from "../utils/auth";
+import { APP_SECRET, isValidPassword, REFRESH_TOKEN_SECRET } from "../utils/auth";
 
 export const AuthPayload = objectType({
   name: "AuthPayload",
   definition(t) {
-    t.nonNull.string("token");
+    t.nonNull.string("accessToken");
+    t.nonNull.string("refreshToken");
     t.nonNull.field("user", {
       type: "User",
     });
@@ -33,9 +34,12 @@ export const AuthMutation = extendType({
           throw new Error("Invalid password");
         }
 
-        const token = jwt.sign({ userId: user.id }, APP_SECRET);
+        const token = jwt.sign(user, APP_SECRET, { expiresIn: '5m'});
+        const refreshToken = jwt.sign(user, REFRESH_TOKEN_SECRET, { expiresIn: '12h'})
+
         return {
           token,
+          refreshToken,
           user,
         };
       },

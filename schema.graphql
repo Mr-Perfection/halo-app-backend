@@ -3,7 +3,8 @@
 
 
 type AuthPayload {
-  token: String!
+  accessToken: String!
+  refreshToken: String!
   user: User!
 }
 

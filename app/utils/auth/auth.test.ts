@@ -1,4 +1,4 @@
-import { isValidPassword } from './auth';
+import { isValidPassword } from '.';
 
 describe('Test isValidPassword util function.', () => {
     it('Should return false if an invalid password is passed in.', async () => {

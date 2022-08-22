@@ -84,7 +84,8 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   AuthPayload: { // root type
-    token: string; // String!
+    accessToken: string; // String!
+    refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
   Customer: { // root type
@@ -118,7 +119,8 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
-    token: string; // String!
+    accessToken: string; // String!
+    refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
   Customer: { // field return type
@@ -151,7 +153,8 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
-    token: 'String'
+    accessToken: 'String'
+    refreshToken: 'String'
     user: 'User'
   }
   Customer: { // field return type name
