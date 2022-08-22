@@ -1,12 +1,13 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { decodeAuthHeader } from "./utils/auth";   
 import { Request } from "express";  
+import { NexusGenObjects } from '../nexus-typegen';
 
 export const prisma = new PrismaClient();
 
 export interface Context {
     prisma: PrismaClient;
-    userId?: number;
+    user: NexusGenObjects['User'] | null;
 }
 
 export const context = ({ req }: { req: Request }): Context => {   // 2
@@ -14,9 +15,9 @@ export const context = ({ req }: { req: Request }): Context => {   // 2
         req && req.headers.authorization
             ? decodeAuthHeader(req.headers.authorization)
             : null;
-
+    
     return {  
         prisma,
-        userId: token?.userId, 
+        user: token, 
     };
 };

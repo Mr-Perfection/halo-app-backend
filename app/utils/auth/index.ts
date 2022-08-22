@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
 import { NexusGenObjects } from '../../../nexus-typegen';
 
@@ -10,13 +9,13 @@ export const REFRESH_TOKEN_SECRET =
 
 // TODO: retrieve type from nexus. This should match what we fined in graphql/Auth
 
-export function decodeAuthHeader(authHeader: String): NexusGenObjects['AuthPayload'] {
+export function decodeAuthHeader(authHeader: String): NexusGenObjects['User'] {
   const token = authHeader.replace("Bearer ", "");
 
   if (!token) {
     throw new Error("No token found");
   }
-  return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['AuthPayload'];
+  return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['User'];
 }
 
 export function isValidPassword(s: string): boolean {
@@ -25,7 +24,7 @@ export function isValidPassword(s: string): boolean {
   return re.test(s);
 }
 
-export function setTokens(user: User) {
+export function setTokens(user: NexusGenObjects['User']) {
   const accessToken = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: "5m" });
   const refreshToken = jwt.sign(user, REFRESH_TOKEN_SECRET, {
     expiresIn: "12h",
@@ -34,17 +33,17 @@ export function setTokens(user: User) {
   return { accessToken, refreshToken };
 }
 
-export function validateAccessToken(token: string): NexusGenObjects['AuthPayload'] | null {
+export function validateAccessToken(token: string): NexusGenObjects['User'] | null {
   try {
-    return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['AuthPayload'];
+    return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['User'];
   } catch {
     return null;
   }
 }
 
-export function validateRefreshToken(token: string): NexusGenObjects['AuthPayload'] | null {
+export function validateRefreshToken(token: string): NexusGenObjects['User'] | null {
   try {
-    return jwt.verify(token, REFRESH_TOKEN_SECRET) as NexusGenObjects['AuthPayload'];
+    return jwt.verify(token, REFRESH_TOKEN_SECRET) as NexusGenObjects['User'];
   } catch {
     return null;
   }
