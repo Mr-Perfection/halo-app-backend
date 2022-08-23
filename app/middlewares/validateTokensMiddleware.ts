@@ -4,6 +4,7 @@ import {
   validateAccessToken,
   validateRefreshToken,
   setTokens,
+  tokenCookies,
 } from "../utils/auth";
 //   const userRepo = require("../users/users-repository");
 
@@ -12,9 +13,8 @@ async function validateTokensMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const refreshToken = req.headers["x-refresh-token"];
-  const accessToken = req.headers["x-access-token"];
-  console.log('refreshToken', accessToken, refreshToken)
+  const refreshToken = req.cookies["refresh"];
+  const accessToken = req.cookies["access"];
   if (!accessToken && !refreshToken) return next();
 
   const decodedAccessToken = validateAccessToken(accessToken as string);
@@ -32,18 +32,24 @@ async function validateTokensMiddleware(
       where: { id: decodedRefreshToken.id },
     });
     // valid user and user token not invalidated
-    if (!user || user.email !== decodedRefreshToken.email) return next();
+    if (!user || user.email !== decodedRefreshToken.email) {
+      // remove cookies if token not valid
+      res.clearCookie("access");
+      res.clearCookie("refresh");
+      return next()
+    };
     // @ts-ignore: TODO: type req.user
     req.user = decodedRefreshToken;
     // refresh the tokens
     const userTokens = setTokens(user);
     console.log("userTokens", userTokens);
 
-    res.set({
-      "Access-Control-Expose-Headers": "x-access-token,x-refresh-token",
-      "x-access-token": userTokens.accessToken,
-      "x-refresh-token": userTokens.refreshToken,
-    });
+    // update the cookies with new tokens
+    const cookies = tokenCookies(userTokens);
+    // @ts-ignore
+    res.cookie(...cookies.access);
+    // @ts-ignore
+    res.cookie(...cookies.refresh);
     return next();
   }
   next();

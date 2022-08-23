@@ -3,8 +3,6 @@
 
 
 type AuthPayload {
-  accessToken: String!
-  refreshToken: String!
   user: User!
 }
 
@@ -47,6 +45,7 @@ type Query {
   getTicketContext(queries: String!): Ticket!
   getUsers: [User!]!
   login(email: String!, password: String!): AuthPayload!
+  logout(email: String!, password: String!): Boolean!
 }
 
 type Ticket {

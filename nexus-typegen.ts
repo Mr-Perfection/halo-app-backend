@@ -84,8 +84,6 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   AuthPayload: { // root type
-    accessToken: string; // String!
-    refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
   Customer: { // root type
@@ -119,8 +117,6 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
-    accessToken: string; // String!
-    refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
   Customer: { // field return type
@@ -138,6 +134,7 @@ export interface NexusGenFieldTypes {
     getTicketContext: NexusGenRootTypes['Ticket']; // Ticket!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    logout: boolean; // Boolean!
   }
   Ticket: { // field return type
     context: string; // String!
@@ -153,8 +150,6 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
-    accessToken: 'String'
-    refreshToken: 'String'
     user: 'User'
   }
   Customer: { // field return type name
@@ -172,6 +167,7 @@ export interface NexusGenFieldTypeNames {
     getTicketContext: 'Ticket'
     getUsers: 'User'
     login: 'AuthPayload'
+    logout: 'Boolean'
   }
   Ticket: { // field return type name
     context: 'String'
@@ -207,6 +203,10 @@ export interface NexusGenArgTypes {
       queries: string; // String!
     }
     login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
+    logout: { // args
       email: string; // String!
       password: string; // String!
     }

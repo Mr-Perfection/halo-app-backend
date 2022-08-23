@@ -48,3 +48,16 @@ export function validateRefreshToken(token: string): NexusGenObjects['User'] | n
     return null;
   }
 }
+
+export function tokenCookies({ accessToken, refreshToken }: {accessToken: string, refreshToken: string}) {
+  const cookieOptions = {
+    httpOnly: true
+    // secure: true, //for HTTPS only
+    // domain: "your-website.com",
+    // SameSite: None
+  };
+  return {
+    access: ["access", accessToken, cookieOptions],
+    refresh: ["refresh", refreshToken, cookieOptions]
+  } 
+};

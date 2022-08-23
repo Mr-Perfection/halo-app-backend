@@ -3,15 +3,13 @@ import * as bcrypt from "bcryptjs";
 import {
   isValidPassword,
   setTokens,
+  tokenCookies,
 } from "../utils/auth";
-import { isEmpty } from 'lodash';
-import { AuthenticationError } from 'apollo-server-core';
+
 
 export const AuthPayload = objectType({
   name: "AuthPayload",
   definition(t) {
-    t.nonNull.string("accessToken");
-    t.nonNull.string("refreshToken");
     t.nonNull.field("user", {
       type: "User",
     });
@@ -28,18 +26,35 @@ export const AuthQuery = extendType({
         password: nonNull(stringArg()),
       },
       async resolve(parent, args, context) {
-        console.log('yuser is', args, context.user)
-        
         const user = await context.prisma.user.findFirstOrThrow({
           where: { email: args.email },
         });
-        console.log('yuser is', user)
         const valid = await bcrypt.compare(args.password, user.password);
         if (!valid) {
           throw new Error("Invalid password");
         }
+        const tokens = setTokens(user);
+        const cookies = tokenCookies(tokens);
+        //@ts-ignore
+        context.res.cookie(...cookies.access);
+        //@ts-ignore
+        context.res.cookie(...cookies.refresh);
 
-        return {...setTokens(user), user};
+        return {user};
+      }
+    });
+    t.nonNull.boolean("logout", {
+      args: {
+        email: nonNull(stringArg()),
+        password: nonNull(stringArg()),
+      },
+      async resolve(parent, args, context) {
+        //@ts-ignore
+        context.res.clearCookie(...cookies.access);
+        //@ts-ignore
+        context.res.clearCookie(...cookies.refresh);
+
+        return true;
       }
     })
   }
@@ -85,7 +100,14 @@ export const AuthMutation = extendType({
           },
         });
 
-        return {...setTokens(user), user};
+        const tokens = setTokens(user);
+        const cookies = tokenCookies(tokens);
+        //@ts-ignore
+        context.res.cookie(...cookies.access);
+        //@ts-ignore
+        context.res.cookie(...cookies.refresh);
+
+        return {user};
       },
     });
   },

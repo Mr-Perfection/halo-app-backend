@@ -1,5 +1,7 @@
 import express from 'express';
 import http from 'http';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv' 
 import { ApolloServer } from "apollo-server-express";
 import {
@@ -24,18 +26,30 @@ const gateway = new ApolloGateway({
 */
 
 // TODO: Enable introspection and playfround only for development.
-const isDev = process.env.mode !== 'production'
+const isDev = process.env.NODE_ENV !== 'production'
 
 async function startApolloServer() {
+  const corsConfig =
+  isDev
+    ? {
+        origin: `http://localhost:3000`,
+        credentials: true
+      }
+    : {
+        origin: "https://your-website.com",
+        credentials: true
+      };
     // Required logic for integrating with Express
     const app = express();
+    app.use(cors(corsConfig));
+    app.use(cookieParser());
     app.use(validateTokensMiddleware)
 
     // Our httpServer handles incoming requests to our Express app.
     // Below, we tell Apollo Server to "drain" this httpServer,
     // enabling our servers to shut down gracefully.
     const httpServer = http.createServer(app);
-  
+
     // Same ApolloServer initialization as before, plus the drain plugin
     // for our httpServer.
     const server = new ApolloServer({
@@ -47,29 +61,19 @@ async function startApolloServer() {
       plugins: [
         ApolloServerPluginDrainHttpServer({ httpServer }),
         ApolloServerPluginLandingPageGraphQLPlayground({ settings: { 'request.credentials': 'include', } }),
-      ]
+      ],
     });
   
     // More required logic for integrating with Express
     await server.start();
     server.applyMiddleware({
       app,
+      cors: corsConfig,
     });
   
     // Modified server startup
-    await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    await new Promise<void>(resolve => httpServer.listen({ port }, resolve));
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
   }
 
 startApolloServer();
-// export const server = new ApolloServer({
-//     schema,
-//     context,
-//     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-// });
-// server.applyMiddleware({ app })
-// server.start().then(() => {
-//     app.listen({port}, () => {
-//         console.log(`🚀  Server ready at http://localhost:${port}${server.graphqlPath}`);
-//     });
-// })
