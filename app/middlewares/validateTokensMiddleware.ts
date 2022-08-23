@@ -14,6 +14,7 @@ async function validateTokensMiddleware(
 ) {
   const refreshToken = req.headers["x-refresh-token"];
   const accessToken = req.headers["x-access-token"];
+  console.log('refreshToken', accessToken, refreshToken)
   if (!accessToken && !refreshToken) return next();
 
   const decodedAccessToken = validateAccessToken(accessToken as string);
@@ -36,6 +37,8 @@ async function validateTokensMiddleware(
     req.user = decodedRefreshToken;
     // refresh the tokens
     const userTokens = setTokens(user);
+    console.log("userTokens", userTokens);
+
     res.set({
       "Access-Control-Expose-Headers": "x-access-token,x-refresh-token",
       "x-access-token": userTokens.accessToken,

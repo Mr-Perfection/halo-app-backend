@@ -4,6 +4,8 @@ import {
   isValidPassword,
   setTokens,
 } from "../utils/auth";
+import { isEmpty } from 'lodash';
+import { AuthenticationError } from 'apollo-server-core';
 
 export const AuthPayload = objectType({
   name: "AuthPayload",
@@ -16,9 +18,8 @@ export const AuthPayload = objectType({
   },
 });
 
-// TODO: need to improve security by creating a refresh token.
-export const AuthMutation = extendType({
-  type: "Mutation",
+export const AuthQuery = extendType({
+  type: "Query",
   definition(t) {
     t.nonNull.field("login", {
       type: "AuthPayload",
@@ -27,18 +28,26 @@ export const AuthMutation = extendType({
         password: nonNull(stringArg()),
       },
       async resolve(parent, args, context) {
+        console.log('yuser is', args, context.user)
+        
         const user = await context.prisma.user.findFirstOrThrow({
           where: { email: args.email },
         });
-
+        console.log('yuser is', user)
         const valid = await bcrypt.compare(args.password, user.password);
         if (!valid) {
           throw new Error("Invalid password");
         }
 
-        return { ...setTokens(user), user };
-      },
-    });
+        return {...setTokens(user), user};
+      }
+    })
+  }
+})
+
+export const AuthMutation = extendType({
+  type: "Mutation",
+  definition(t) {
     t.nonNull.field("signup", {
       type: "AuthPayload",
       args: {
@@ -76,7 +85,7 @@ export const AuthMutation = extendType({
           },
         });
 
-        return { ...setTokens(user), user };
+        return {...setTokens(user), user};
       },
     });
   },

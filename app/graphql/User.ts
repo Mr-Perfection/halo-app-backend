@@ -1,4 +1,6 @@
-import { objectType, extendType, nonNull, stringArg, enumType } from "nexus";
+import { AuthenticationError } from 'apollo-server-core';
+import { isEmpty } from 'lodash';
+import { objectType, extendType, enumType } from "nexus";
 // src
 import { NexusGenObjects } from "../../nexus-typegen";  
 
@@ -28,6 +30,7 @@ export const UserQuery = extendType({
         t.nonNull.list.nonNull.field("getUsers", {
             type: "User",
             async resolve(parent, args, context, info) {
+                if (isEmpty(context.user)) throw new AuthenticationError("User must be authenticated.");
                 const users = await context.prisma.user.findMany()
                 return users;
             },

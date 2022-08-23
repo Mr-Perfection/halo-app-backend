@@ -39,7 +39,6 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 
 type Mutation {
   createCustomer(slug: String!): Customer!
-  login(email: String!, password: String!): AuthPayload!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
 }
 
@@ -47,6 +46,7 @@ type Query {
   getCustomer(slug: String): Customer!
   getTicketContext(queries: String!): Ticket!
   getUsers: [User!]!
+  login(email: String!, password: String!): AuthPayload!
 }
 
 type Ticket {
