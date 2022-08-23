@@ -32,10 +32,11 @@ async function startApolloServer() {
   const corsConfig =
   isDev
     ? {
-        origin: `http://localhost:3000`,
+        origins: ["http://localhost:3000", "https://studio.apollographql.com"],
         credentials: true
       }
     : {
+      // TBD for production.
         origin: "https://your-website.com",
         credentials: true
       };

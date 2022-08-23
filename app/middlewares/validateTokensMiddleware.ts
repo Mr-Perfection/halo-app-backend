@@ -42,7 +42,6 @@ async function validateTokensMiddleware(
     req.user = decodedRefreshToken;
     // refresh the tokens
     const userTokens = setTokens(user);
-    console.log("userTokens", userTokens);
 
     // update the cookies with new tokens
     const cookies = tokenCookies(userTokens);
