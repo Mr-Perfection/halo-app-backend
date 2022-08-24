@@ -18,6 +18,7 @@ export function decodeAuthHeader(authHeader: String): NexusGenObjects['User'] {
   return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['User'];
 }
 
+// !IMPORTANT If this is modified, modify in client side too.
 export function isValidPassword(s: string): boolean {
   // Min 8 letter password, with at least a symbol, upper and lower case letters and a number.
   const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
