@@ -27,17 +27,16 @@ const gateway = new ApolloGateway({
 
 // TODO: Enable introspection and playfround only for development.
 const isDev = process.env.NODE_ENV !== 'production'
-
 async function startApolloServer() {
   const corsConfig =
   isDev
     ? {
-        origins: ["http://localhost:3000", "https://studio.apollographql.com"],
+        origin: ["http://localhost:3000", "https://studio.apollographql.com"],
         credentials: true
       }
     : {
       // TBD for production.
-        origin: "https://your-website.com",
+        origin: "https://dhquc5t0tua3a.cloudfront.net",
         credentials: true
       };
     // Required logic for integrating with Express
@@ -65,6 +64,10 @@ async function startApolloServer() {
       ],
     });
   
+    app.get('/healthcheck', (req, res) => {
+      res.status(200).send('Ok');
+    })
+
     // More required logic for integrating with Express
     await server.start();
     server.applyMiddleware({

@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { decodeAuthHeader } from "./utils/auth";   
 import { Request, Response } from "express";  
-import { NexusGenObjects } from '../nexus-typegen';
 
 export const prisma = new PrismaClient();
 

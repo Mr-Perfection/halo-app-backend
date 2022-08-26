@@ -12,7 +12,7 @@ http:
   # To match all requests you can use the "/" path.
   path: '/'
   # You can specify a custom health check path. The default is "/".
-  healthcheck: '/graphql?query=%7B__typename%7D'
+  healthcheck: '/healthcheck'
 
 # Configuration for your containers and service.
 image:
@@ -31,12 +31,12 @@ exec: true     # Enable running commands in your container.
 #
 variables:                    # Pass environment variables as key value pairs.
   LOG_LEVEL: debug
-  APP_SECRET: fe83zp@AB-YYzP # Should be coming from the Secret Manager.
 
-environments:
-  production:
-    variables:
-      LOG_LEVEL: info
+# environments:
+#   production:
+#     variables:
+#       LOG_LEVEL: info
+#       NODE_ENV: production
       # Overwrite variables for production.
 
 
@@ -44,8 +44,11 @@ environments:
 #  GITHUB_TOKEN: GITHUB_TOKEN  # The key is the name of the environment variable, the value is the name of the SSM parameter.
 
 # You can override any of the values defined above by environment.
-#environments:
-#  test:
-#    count: 2               # Number of tasks to run for the "test" environment.
-#    deployment:            # The deployment strategy for the "test" environment.
-#       rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
+environments:
+  test:
+  #  count: 2               # Number of tasks to run for the "test" environment.
+    deployment:            # The deployment strategy for the "test" environment.
+      rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
+    variables:                    # Pass environment variables as key value pairs.
+      NODE_ENV: production
+      LOG_LEVEL: debug
