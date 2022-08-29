@@ -3,6 +3,7 @@
 
 
 type AuthPayload {
+  id: Int!
   user: User!
 }
 

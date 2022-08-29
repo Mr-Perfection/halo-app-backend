@@ -10,6 +10,7 @@ import {
 export const AuthPayload = objectType({
   name: "AuthPayload",
   definition(t) {
+    t.nonNull.int("id")
     t.nonNull.field("user", {
       type: "User",
     });
@@ -40,7 +41,7 @@ export const AuthQuery = extendType({
         //@ts-ignore
         context.res.cookie(...cookies.refresh);
 
-        return {user};
+        return {user, id: user.id};
       }
     });
     t.nonNull.boolean("logout", {
@@ -107,7 +108,7 @@ export const AuthMutation = extendType({
         //@ts-ignore
         context.res.cookie(...cookies.refresh);
 
-        return {user};
+        return {user, id: user.id};
       },
     });
   },
