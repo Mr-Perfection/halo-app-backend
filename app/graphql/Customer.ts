@@ -4,7 +4,7 @@ export const Customer = objectType({
   name: "Customer",
   definition(t) {
     t.nonNull.int("id");
-    t.string("slug");
+    t.nonNull.string("slug");
     t.dateTime("createdAt");
     t.list.field('users', {
       type: "User",

@@ -90,7 +90,7 @@ export interface NexusGenObjects {
   Customer: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id: number; // Int!
-    slug?: string | null; // String
+    slug: string; // String!
   }
   Mutation: {};
   Query: {};
@@ -125,7 +125,7 @@ export interface NexusGenFieldTypes {
   Customer: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: number; // Int!
-    slug: string | null; // String
+    slug: string; // String!
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Mutation: { // field return type

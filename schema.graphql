@@ -19,7 +19,7 @@ scalar Bytes
 type Customer {
   createdAt: DateTime
   id: Int!
-  slug: String
+  slug: String!
   users: [User]
 }
 
