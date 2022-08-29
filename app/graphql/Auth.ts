@@ -44,6 +44,12 @@ export const AuthQuery = extendType({
         return {user, id: user.id};
       }
     });
+  }
+})
+
+export const AuthMutation = extendType({
+  type: "Mutation",
+  definition(t) {
     t.nonNull.boolean("logout", {
       async resolve(parent, args, context) {
         //@ts-ignore
@@ -53,12 +59,6 @@ export const AuthQuery = extendType({
         return true;
       }
     })
-  }
-})
-
-export const AuthMutation = extendType({
-  type: "Mutation",
-  definition(t) {
     t.nonNull.field("signup", {
       type: "AuthPayload",
       args: {

@@ -130,6 +130,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createCustomer: NexusGenRootTypes['Customer']; // Customer!
+    logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
@@ -138,7 +139,6 @@ export interface NexusGenFieldTypes {
     getUser: NexusGenRootTypes['User']; // User!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
-    logout: boolean; // Boolean!
   }
   Ticket: { // field return type
     context: string; // String!
@@ -166,6 +166,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createCustomer: 'Customer'
+    logout: 'Boolean'
     signup: 'AuthPayload'
   }
   Query: { // field return type name
@@ -174,7 +175,6 @@ export interface NexusGenFieldTypeNames {
     getUser: 'User'
     getUsers: 'User'
     login: 'AuthPayload'
-    logout: 'Boolean'
   }
   Ticket: { // field return type name
     context: 'String'
