@@ -55,6 +55,7 @@ type Ticket {
 }
 
 type User {
+  customer: Customer
   email: String!
   firstName: String!
   id: Int!

@@ -21,6 +21,9 @@ export const User = objectType({
         t.nonNull.field("role", {
             type: "UserRole",
         })
+        t.field("customer", {
+            type: "Customer",
+        })
     },
 });
 
@@ -50,7 +53,11 @@ export const UserQuery = extendType({
                 const user = await context.prisma.user.findFirstOrThrow({
                     where: { id: currentUser.id },
                   });
-                return user;
+                  const customer = await context.prisma.customer.findFirstOrThrow({
+                    where: { id: user.customerId },
+                  });
+                console.log('current ser', currentUser)
+                return {...user, customer: customer};
             },
         });
     },

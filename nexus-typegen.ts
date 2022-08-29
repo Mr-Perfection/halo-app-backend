@@ -98,6 +98,7 @@ export interface NexusGenObjects {
     context: string; // String!
   }
   User: { // root type
+    customer?: NexusGenRootTypes['Customer'] | null; // Customer
     email: string; // String!
     firstName: string; // String!
     id: number; // Int!
@@ -143,6 +144,7 @@ export interface NexusGenFieldTypes {
     context: string; // String!
   }
   User: { // field return type
+    customer: NexusGenRootTypes['Customer'] | null; // Customer
     email: string; // String!
     firstName: string; // String!
     id: number; // Int!
@@ -178,6 +180,7 @@ export interface NexusGenFieldTypeNames {
     context: 'String'
   }
   User: { // field return type name
+    customer: 'Customer'
     email: 'String'
     firstName: 'String'
     id: 'Int'
