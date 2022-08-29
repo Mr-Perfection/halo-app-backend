@@ -45,16 +45,11 @@ export const AuthQuery = extendType({
       }
     });
     t.nonNull.boolean("logout", {
-      args: {
-        email: nonNull(stringArg()),
-        password: nonNull(stringArg()),
-      },
       async resolve(parent, args, context) {
         //@ts-ignore
         context.res.clearCookie(...cookies.access);
         //@ts-ignore
         context.res.clearCookie(...cookies.refresh);
-
         return true;
       }
     })

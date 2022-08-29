@@ -214,10 +214,6 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
     }
-    logout: { // args
-      email: string; // String!
-      password: string; // String!
-    }
   }
 }
 

@@ -47,7 +47,7 @@ type Query {
   getUser: User!
   getUsers: [User!]!
   login(email: String!, password: String!): AuthPayload!
-  logout(email: String!, password: String!): Boolean!
+  logout: Boolean!
 }
 
 type Ticket {

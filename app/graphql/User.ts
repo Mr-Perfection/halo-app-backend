@@ -56,7 +56,6 @@ export const UserQuery = extendType({
                   const customer = await context.prisma.customer.findFirstOrThrow({
                     where: { id: user.customerId },
                   });
-                console.log('current ser', currentUser)
                 return {...user, customer: customer};
             },
         });
