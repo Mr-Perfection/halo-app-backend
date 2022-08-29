@@ -1,4 +1,6 @@
+import { AuthenticationError } from 'apollo-server-core';
 import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { hasValidAuthContext } from '../utils/auth';
 
 export const Customer = objectType({
   name: "Customer",
@@ -34,6 +36,7 @@ export const CustomerMutation = extendType({
         slug: nonNull(stringArg()),
       },
       async resolve(parent, args, context) {
+        if (!hasValidAuthContext(context)) throw new AuthenticationError("User must be authenticated.");
         const { slug } = args;
         const customer = await context.prisma.customer.create({
           data: { slug: slug.replace(/ /g,'').toUpperCase() },

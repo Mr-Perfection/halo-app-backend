@@ -1,5 +1,8 @@
 import * as jwt from "jsonwebtoken";
+import { isEmpty } from 'lodash';
 import { NexusGenObjects } from '../../../nexus-typegen';
+import { JWTTokenFields } from '../../constants/auth';
+import { Context } from '../../context';
 
 // TODO: these should be coming from Secret Manager.
 export const ACCESS_TOKEN_SECRET =
@@ -58,7 +61,13 @@ export function tokenCookies({ accessToken, refreshToken }: {accessToken: string
     // SameSite: None
   };
   return {
-    access: ["access", accessToken, cookieOptions],
-    refresh: ["refresh", refreshToken, cookieOptions]
+    access: [JWTTokenFields.ACCESS, accessToken, cookieOptions],
+    refresh: [JWTTokenFields.REFRESH, refreshToken, cookieOptions]
   } 
 };
+
+export function hasValidAuthContext(context: Context) {
+  //@ts-ignore TODO: type the request to include user.
+  const currentUser = context.req.user as NexusGenObjects['User'];
+  return !isEmpty(currentUser)
+}

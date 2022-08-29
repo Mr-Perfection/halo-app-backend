@@ -5,6 +5,7 @@ import {
   setTokens,
   tokenCookies,
 } from "../utils/auth";
+import { JWTTokenFields } from '../constants/auth';
 
 
 export const AuthPayload = objectType({
@@ -53,9 +54,9 @@ export const AuthMutation = extendType({
     t.nonNull.boolean("logout", {
       async resolve(parent, args, context) {
         //@ts-ignore
-        context.res.clearCookie(...cookies.access);
+        context.res.clearCookie(JWTTokenFields.ACCESS);
         //@ts-ignore
-        context.res.clearCookie(...cookies.refresh);
+        context.res.clearCookie(JWTTokenFields.REFRESH);
         return true;
       }
     })

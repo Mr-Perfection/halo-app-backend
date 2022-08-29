@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { JWTTokenFields } from '../constants/auth';
 import { prisma } from "../context";
 import {
   validateAccessToken,
@@ -13,8 +14,8 @@ async function validateTokensMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const refreshToken = req.cookies["refresh"];
-  const accessToken = req.cookies["access"];
+  const refreshToken = req.cookies[JWTTokenFields.REFRESH];
+  const accessToken = req.cookies[JWTTokenFields.ACCESS];
   if (!accessToken && !refreshToken) return next();
 
   const decodedAccessToken = validateAccessToken(accessToken as string);
@@ -34,8 +35,8 @@ async function validateTokensMiddleware(
     // valid user and user token not invalidated
     if (!user || user.email !== decodedRefreshToken.email) {
       // remove cookies if token not valid
-      res.clearCookie("access");
-      res.clearCookie("refresh");
+      res.clearCookie(JWTTokenFields.ACCESS);
+      res.clearCookie(JWTTokenFields.REFRESH);
       return next()
     };
     // @ts-ignore: TODO: type req.user

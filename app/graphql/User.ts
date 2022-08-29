@@ -3,6 +3,8 @@ import { isEmpty } from 'lodash';
 import { objectType, extendType, enumType } from "nexus";
 // src
 import { NexusGenObjects } from "../../nexus-typegen";  
+import { CustomGraphQLErrors } from '../constants/auth';
+import { hasValidAuthContext } from '../utils/auth';
 
 export const UserRole = enumType({
     name: 'UserRole',
@@ -34,8 +36,7 @@ export const UserQuery = extendType({
             type: "User",
             async resolve(parent, args, context, info) {
                 //@ts-ignore TODO: type the request to include user.
-                const currentUser = context.req.user as NexusGenObjects['User'];
-                if (isEmpty(currentUser)) throw new AuthenticationError("User must be authenticated.");
+                if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
                 // TODO: user should only have access to their company data. 
                 // if (isEmpty(currentUser.)) throw new AuthenticationError("User must be authenticated.");
                 const users = await context.prisma.user.findMany()
@@ -45,9 +46,9 @@ export const UserQuery = extendType({
         t.nonNull.field("getUser", {
             type: "User",
             async resolve(parent, args, context, info) {
+                if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
                 //@ts-ignore TODO: type the request to include user.
                 const currentUser = context.req.user as NexusGenObjects['User'];
-                if (isEmpty(currentUser)) throw new AuthenticationError("User must be authenticated.");
                 // TODO: user should only have access to their company data. 
                 // if (isEmpty(currentUser.)) throw new AuthenticationError("User must be authenticated.");
                 const user = await context.prisma.user.findFirstOrThrow({
