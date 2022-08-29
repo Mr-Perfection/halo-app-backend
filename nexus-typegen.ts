@@ -134,6 +134,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getCustomer: NexusGenRootTypes['Customer']; // Customer!
     getTicketContext: NexusGenRootTypes['Ticket']; // Ticket!
+    getUser: NexusGenRootTypes['User']; // User!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     logout: boolean; // Boolean!
@@ -168,6 +169,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     getCustomer: 'Customer'
     getTicketContext: 'Ticket'
+    getUser: 'User'
     getUsers: 'User'
     login: 'AuthPayload'
     logout: 'Boolean'

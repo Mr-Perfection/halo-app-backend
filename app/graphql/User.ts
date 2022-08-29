@@ -39,5 +39,19 @@ export const UserQuery = extendType({
                 return users;
             },
         });
+        t.nonNull.field("getUser", {
+            type: "User",
+            async resolve(parent, args, context, info) {
+                //@ts-ignore TODO: type the request to include user.
+                const currentUser = context.req.user as NexusGenObjects['User'];
+                if (isEmpty(currentUser)) throw new AuthenticationError("User must be authenticated.");
+                // TODO: user should only have access to their company data. 
+                // if (isEmpty(currentUser.)) throw new AuthenticationError("User must be authenticated.");
+                const user = await context.prisma.user.findFirstOrThrow({
+                    where: { id: currentUser.id },
+                  });
+                return user;
+            },
+        });
     },
 });
