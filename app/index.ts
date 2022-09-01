@@ -36,7 +36,7 @@ async function startApolloServer() {
       }
     : {
       // TBD for production.
-        origin: "https://dhquc5t0tua3a.cloudfront.net",
+        origin: ["https://beta.getsocialkarma.com", "https://getsocialkarma.com"],
         credentials: true
       };
     // Required logic for integrating with Express
