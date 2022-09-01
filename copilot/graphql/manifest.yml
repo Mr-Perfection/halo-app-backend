@@ -45,9 +45,9 @@ variables:                    # Pass environment variables as key value pairs.
 
 # You can override any of the values defined above by environment.
 environments:
-  test:
-  #  count: 2               # Number of tasks to run for the "test" environment.
-    deployment:            # The deployment strategy for the "test" environment.
+  beta:
+  #  count: 2               # Number of tasks to run for the "beta" environment.
+    deployment:            # The deployment strategy for the "beta" environment.
       rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
     variables:                    # Pass environment variables as key value pairs.
       NODE_ENV: production
