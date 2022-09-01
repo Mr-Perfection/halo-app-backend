@@ -66,7 +66,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
-  UserRole: "ADMIN" | "OPERATOR"
+  UserRole: "ADMIN" | "OPERATOR" | "ROOT"
 }
 
 export interface NexusGenScalars {

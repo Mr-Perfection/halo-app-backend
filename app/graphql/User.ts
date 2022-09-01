@@ -8,7 +8,7 @@ import { hasValidAuthContext } from '../utils/auth';
 
 export const UserRole = enumType({
     name: 'UserRole',
-    members: ['ADMIN', 'OPERATOR'],
+    members: ['ADMIN', 'OPERATOR', 'ROOT'],
     description: 'Roles that determine what permissions the user has access to.',
   })
 

@@ -65,7 +65,7 @@ type User {
 
 """Roles that determine what permissions the user has access to."""
 enum UserRole {
-  ROOT
   ADMIN
   OPERATOR
+  ROOT
 }
