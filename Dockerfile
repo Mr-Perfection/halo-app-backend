@@ -6,10 +6,10 @@ WORKDIR /usr/src
 RUN apt-get update
 RUN apt-get install -y openssl
 COPY package*.json ./
-RUN yarn
 COPY . .
-RUN yarn run build
+RUN yarn
 RUN yarn run prisma
+RUN yarn run build
 
 EXPOSE 4000
 
