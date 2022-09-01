@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import * as jwt from "jsonwebtoken";
 import { isEmpty } from 'lodash';
 import { NexusGenObjects } from '../../../nexus-typegen';
@@ -12,13 +13,13 @@ export const REFRESH_TOKEN_SECRET =
 
 // TODO: retrieve type from nexus. This should match what we fined in graphql/Auth
 
-export function decodeAuthHeader(authHeader: String): NexusGenObjects['User'] {
+export function decodeAuthHeader(authHeader: String): User {
   const token = authHeader.replace("Bearer ", "");
 
   if (!token) {
     throw new Error("No token found");
   }
-  return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['User'];
+  return jwt.verify(token, ACCESS_TOKEN_SECRET) as User;
 }
 
 // !IMPORTANT If this is modified, modify in client side too.
@@ -28,7 +29,7 @@ export function isValidPassword(s: string): boolean {
   return re.test(s);
 }
 
-export function setTokens(user: NexusGenObjects['User']) {
+export function setTokens(user: User) {
   const accessToken = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: "5m" });
   const refreshToken = jwt.sign(user, REFRESH_TOKEN_SECRET, {
     expiresIn: "12h",
@@ -37,17 +38,17 @@ export function setTokens(user: NexusGenObjects['User']) {
   return { accessToken, refreshToken };
 }
 
-export function validateAccessToken(token: string): NexusGenObjects['User'] | null {
+export function validateAccessToken(token: string): User | null {
   try {
-    return jwt.verify(token, ACCESS_TOKEN_SECRET) as NexusGenObjects['User'];
+    return jwt.verify(token, ACCESS_TOKEN_SECRET) as User;
   } catch {
     return null;
   }
 }
 
-export function validateRefreshToken(token: string): NexusGenObjects['User'] | null {
+export function validateRefreshToken(token: string): User | null {
   try {
-    return jwt.verify(token, REFRESH_TOKEN_SECRET) as NexusGenObjects['User'];
+    return jwt.verify(token, REFRESH_TOKEN_SECRET) as User;
   } catch {
     return null;
   }
@@ -68,6 +69,6 @@ export function tokenCookies({ accessToken, refreshToken }: {accessToken: string
 
 export function hasValidAuthContext(context: Context) {
   //@ts-ignore TODO: type the request to include user.
-  const currentUser = context.req.user as NexusGenObjects['User'];
+  const currentUser = context.req.user as User;
   return !isEmpty(currentUser)
 }

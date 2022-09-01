@@ -1,8 +1,6 @@
-import { AuthenticationError } from 'apollo-server-core';
-import { isEmpty } from 'lodash';
+import { User as PrismaUser } from '@prisma/client';
 import { objectType, extendType, enumType } from "nexus";
 // src
-import { NexusGenObjects } from "../../nexus-typegen";  
 import { CustomGraphQLErrors } from '../constants/auth';
 import { hasValidAuthContext } from '../utils/auth';
 
@@ -35,20 +33,42 @@ export const UserQuery = extendType({
         t.nonNull.list.nonNull.field("getUsers", {
             type: "User",
             async resolve(parent, args, context, info) {
-                //@ts-ignore TODO: type the request to include user.
                 if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
-                // TODO: user should only have access to their company data. 
-                // if (isEmpty(currentUser.)) throw new AuthenticationError("User must be authenticated.");
-                const users = await context.prisma.user.findMany()
-                return users;
+                //@ts-ignore TODO: type the request to include user.
+                const currentUser = context.req.user as PrismaUser;
+                switch(currentUser.role) {
+                    case 'ADMIN':
+                        return await context.prisma.user.findMany({ 
+                            where: { 
+                                id: currentUser.id, 
+                                customerId: currentUser.customerId,
+                                role: {
+                                    in: ['OPERATOR'],
+                                }
+                            },
+                        })
+                    case 'ROOT':
+                        return await context.prisma.user.findMany({ 
+                            where: { 
+                                id: currentUser.id,
+                                customerId: currentUser.customerId,
+                                role: {
+                                    in: ['OPERATOR', 'ADMIN'],
+                                }
+                            } 
+                        })
+                    default:
+                        return []
+                }
             },
         });
+
         t.nonNull.field("getUser", {
             type: "User",
             async resolve(parent, args, context, info) {
                 if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
                 //@ts-ignore TODO: type the request to include user.
-                const currentUser = context.req.user as NexusGenObjects['User'];
+                const currentUser = context.req.user as PrismaUser;
                 // TODO: user should only have access to their company data. 
                 // if (isEmpty(currentUser.)) throw new AuthenticationError("User must be authenticated.");
                 const user = await context.prisma.user.findFirstOrThrow({
