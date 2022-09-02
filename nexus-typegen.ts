@@ -66,6 +66,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  DBType: "MYSQL" | "POSTGRESQL"
   UserRole: "ADMIN" | "OPERATOR" | "ROOT"
 }
 
@@ -91,6 +92,14 @@ export interface NexusGenObjects {
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id: number; // Int!
     slug: string; // String!
+  }
+  DBCredentials: { // root type
+    connectionString: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    customer?: NexusGenRootTypes['Customer'] | null; // Customer
+    id: number; // Int!
+    type: NexusGenEnums['DBType']; // DBType!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Mutation: {};
   Query: {};
@@ -128,12 +137,22 @@ export interface NexusGenFieldTypes {
     slug: string; // String!
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
+  DBCredentials: { // field return type
+    connectionString: string; // String!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    customer: NexusGenRootTypes['Customer'] | null; // Customer
+    id: number; // Int!
+    type: NexusGenEnums['DBType']; // DBType!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Mutation: { // field return type
     createCustomer: NexusGenRootTypes['Customer']; // Customer!
+    createDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
     logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
+    getAllDBCredentials: NexusGenRootTypes['DBCredentials'][]; // [DBCredentials!]!
     getCustomer: NexusGenRootTypes['Customer']; // Customer!
     getTicketContext: NexusGenRootTypes['Ticket']; // Ticket!
     getUser: NexusGenRootTypes['User']; // User!
@@ -164,12 +183,22 @@ export interface NexusGenFieldTypeNames {
     slug: 'String'
     users: 'User'
   }
+  DBCredentials: { // field return type name
+    connectionString: 'String'
+    createdAt: 'DateTime'
+    customer: 'Customer'
+    id: 'Int'
+    type: 'DBType'
+    updatedAt: 'DateTime'
+  }
   Mutation: { // field return type name
     createCustomer: 'Customer'
+    createDBCredentials: 'DBCredentials'
     logout: 'Boolean'
     signup: 'AuthPayload'
   }
   Query: { // field return type name
+    getAllDBCredentials: 'DBCredentials'
     getCustomer: 'Customer'
     getTicketContext: 'Ticket'
     getUser: 'User'
@@ -193,6 +222,10 @@ export interface NexusGenArgTypes {
   Mutation: {
     createCustomer: { // args
       slug: string; // String!
+    }
+    createDBCredentials: { // args
+      connectionString: string; // String!
+      type: NexusGenEnums['DBType']; // DBType!
     }
     signup: { // args
       customerSlug: string; // String!

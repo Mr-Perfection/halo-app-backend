@@ -23,6 +23,21 @@ type Customer {
   users: [User]
 }
 
+type DBCredentials {
+  connectionString: String!
+  createdAt: DateTime
+  customer: Customer
+  id: Int!
+  type: DBType!
+  updatedAt: DateTime
+}
+
+"""Type of database credentials that user has."""
+enum DBType {
+  MYSQL
+  POSTGRESQL
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -38,11 +53,13 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 
 type Mutation {
   createCustomer(slug: String!): Customer!
+  createDBCredentials(connectionString: String!, type: DBType!): DBCredentials!
   logout: Boolean!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
 }
 
 type Query {
+  getAllDBCredentials: [DBCredentials!]!
   getCustomer(slug: String): Customer!
   getTicketContext(queries: String!): Ticket!
   getUser: User!
