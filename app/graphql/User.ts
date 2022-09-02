@@ -40,7 +40,6 @@ export const UserQuery = extendType({
                     case 'ADMIN':
                         return await context.prisma.user.findMany({ 
                             where: { 
-                                id: currentUser.id, 
                                 customerId: currentUser.customerId,
                                 role: {
                                     in: ['OPERATOR'],
@@ -50,7 +49,6 @@ export const UserQuery = extendType({
                     case 'ROOT':
                         return await context.prisma.user.findMany({ 
                             where: { 
-                                id: currentUser.id,
                                 customerId: currentUser.customerId,
                                 role: {
                                     in: ['OPERATOR', 'ADMIN'],
