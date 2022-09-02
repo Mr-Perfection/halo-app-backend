@@ -1,5 +1,5 @@
-import { AuthenticationError } from 'apollo-server-core';
 import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { CustomGraphQLErrors } from '../constants/auth';
 import { hasValidAuthContext } from '../utils/auth';
 
 export const Customer = objectType({
@@ -36,7 +36,7 @@ export const CustomerMutation = extendType({
         slug: nonNull(stringArg()),
       },
       async resolve(parent, args, context) {
-        if (!hasValidAuthContext(context)) throw new AuthenticationError("User must be authenticated.");
+        if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
         const { slug } = args;
         const customer = await context.prisma.customer.create({
           data: { slug: slug.replace(/ /g,'').toUpperCase() },
@@ -53,7 +53,7 @@ export const CustomerQuery = extendType({
     t.nonNull.field("getCustomer", {
       type: "Customer",
       args: {
-        slug: stringArg(),
+        slug: nonNull(stringArg()),
       },
       async resolve(parent, args, context, info) {
         const { slug } = args;

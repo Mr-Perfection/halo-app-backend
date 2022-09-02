@@ -238,7 +238,7 @@ export interface NexusGenArgTypes {
   }
   Query: {
     getCustomer: { // args
-      slug?: string | null; // String
+      slug: string; // String!
     }
     getTicketContext: { // args
       queries: string; // String!

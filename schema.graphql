@@ -60,7 +60,7 @@ type Mutation {
 
 type Query {
   getAllDBCredentials: [DBCredentials!]!
-  getCustomer(slug: String): Customer!
+  getCustomer(slug: String!): Customer!
   getTicketContext(queries: String!): Ticket!
   getUser: User!
   getUsers: [User!]!
