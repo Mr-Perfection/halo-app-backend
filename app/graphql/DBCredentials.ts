@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { arg, enumType, extendType, nonNull, objectType, stringArg } from "nexus";
+import { arg, enumType, extendType, intArg, nonNull, objectType, stringArg } from "nexus";
 import { CustomGraphQLErrors } from '../constants/auth';
 import { hasValidAuthContext } from '../utils/auth';
 
@@ -61,6 +61,33 @@ export const DBCredentialsrMutation = extendType({
         },
         });
         return dBCredentials;
+      },
+    });
+    t.nonNull.field("deleteDBCredentials", {
+      type: "DBCredentials",
+      args: {
+        id: nonNull(intArg()),
+      },
+      async resolve(parent, args, context) {
+        if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
+        const { id } = args;
+        // TODO: type the request to include user.
+        //@ts-ignore 
+        const currentUser = context.req.user as User;
+        
+        // Ensure that credentials cannot be deleted by non-current customers.
+        await context.prisma.dBCredentials.findFirstOrThrow({
+          where: {
+            id,
+            customerId: currentUser.customerId,
+          }
+        })
+        
+        return await context.prisma.dBCredentials.delete({
+          where: {
+            id,
+          }
+        });
       },
     });
   },

@@ -156,6 +156,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createCustomer: NexusGenRootTypes['Customer']; // Customer!
     createDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
+    deleteDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
     logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
@@ -206,6 +207,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createCustomer: 'Customer'
     createDBCredentials: 'DBCredentials'
+    deleteDBCredentials: 'DBCredentials'
     logout: 'Boolean'
     signup: 'AuthPayload'
   }
@@ -242,6 +244,9 @@ export interface NexusGenArgTypes {
       port: string; // String!
       type: NexusGenEnums['DBType']; // DBType!
       username: string; // String!
+    }
+    deleteDBCredentials: { // args
+      id: number; // Int!
     }
     signup: { // args
       customerSlug: string; // String!

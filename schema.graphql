@@ -58,6 +58,7 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 type Mutation {
   createCustomer(slug: String!): Customer!
   createDBCredentials(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): DBCredentials!
+  deleteDBCredentials(id: Int!): DBCredentials!
   logout: Boolean!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
 }
