@@ -94,12 +94,16 @@ export interface NexusGenObjects {
     slug: string; // String!
   }
   DBCredentials: { // root type
-    connectionString: string; // String!
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     customer?: NexusGenRootTypes['Customer'] | null; // Customer
+    host: string; // String!
     id: number; // Int!
+    name: string; // String!
+    password: string; // String!
+    port: string; // String!
     type: NexusGenEnums['DBType']; // DBType!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    username: string; // String!
   }
   Mutation: {};
   Query: {};
@@ -138,12 +142,16 @@ export interface NexusGenFieldTypes {
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   DBCredentials: { // field return type
-    connectionString: string; // String!
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     customer: NexusGenRootTypes['Customer'] | null; // Customer
+    host: string; // String!
     id: number; // Int!
+    name: string; // String!
+    password: string; // String!
+    port: string; // String!
     type: NexusGenEnums['DBType']; // DBType!
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    username: string; // String!
   }
   Mutation: { // field return type
     createCustomer: NexusGenRootTypes['Customer']; // Customer!
@@ -184,12 +192,16 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   DBCredentials: { // field return type name
-    connectionString: 'String'
     createdAt: 'DateTime'
     customer: 'Customer'
+    host: 'String'
     id: 'Int'
+    name: 'String'
+    password: 'String'
+    port: 'String'
     type: 'DBType'
     updatedAt: 'DateTime'
+    username: 'String'
   }
   Mutation: { // field return type name
     createCustomer: 'Customer'
@@ -224,8 +236,12 @@ export interface NexusGenArgTypes {
       slug: string; // String!
     }
     createDBCredentials: { // args
-      connectionString: string; // String!
+      host: string; // String!
+      name: string; // String!
+      password: string; // String!
+      port: string; // String!
       type: NexusGenEnums['DBType']; // DBType!
+      username: string; // String!
     }
     signup: { // args
       customerSlug: string; // String!

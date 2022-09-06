@@ -17,12 +17,16 @@ export const DBCredentials = objectType({
     t.nonNull.field("type", {
         type: "DBType",
     })
-    t.nonNull.string("connectionString");
+    t.field("customer", {
+      type: "Customer",
+    })
+    t.nonNull.string("host");
+    t.nonNull.string("port");
+    t.nonNull.string("name");
+    t.nonNull.string("username");
+    t.nonNull.string("password");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
-    t.field("customer", {
-        type: "Customer",
-    })
   },
 });
 
@@ -33,11 +37,15 @@ export const DBCredentialsrMutation = extendType({
       type: "DBCredentials",
       args: {
         type: nonNull(arg({type: DBEnumType})),
-        connectionString: nonNull(stringArg()),
+        host: nonNull(stringArg()),
+        port: nonNull(stringArg()),
+        name: nonNull(stringArg()),
+        username: nonNull(stringArg()),
+        password: nonNull(stringArg()),
       },
       async resolve(parent, args, context) {
         if (!hasValidAuthContext(context)) throw CustomGraphQLErrors.AUTH_ERROR;
-        const { connectionString, type } = args;
+        const { type, host, port, name, username, password } = args;
         // TODO: type the request to include user.
         //@ts-ignore 
         const currentUser = context.req.user as User;
@@ -45,7 +53,11 @@ export const DBCredentialsrMutation = extendType({
           data: {
             type,
             customerId: currentUser.customerId,
-            connectionString
+            host,
+            port,
+            name,
+            username,
+            password
         },
         });
         return dBCredentials;

@@ -24,12 +24,16 @@ type Customer {
 }
 
 type DBCredentials {
-  connectionString: String!
   createdAt: DateTime
   customer: Customer
+  host: String!
   id: Int!
+  name: String!
+  password: String!
+  port: String!
   type: DBType!
   updatedAt: DateTime
+  username: String!
 }
 
 """Type of database credentials that user has."""
@@ -53,7 +57,7 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 
 type Mutation {
   createCustomer(slug: String!): Customer!
-  createDBCredentials(connectionString: String!, type: DBType!): DBCredentials!
+  createDBCredentials(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): DBCredentials!
   logout: Boolean!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
 }
