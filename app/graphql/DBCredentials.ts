@@ -66,7 +66,6 @@ export const DBCredentialsQuery = extendType({
         const currentUser = context.req.user as User;
         const customerId = currentUser.customerId;
 
-        if (customerId === undefined) throw CustomGraphQLErrors.INVALID_CUSTOMER_ERROR;
         const allDBCredentials = await context.prisma.dBCredentials.findMany({
             where: {
               customerId,
