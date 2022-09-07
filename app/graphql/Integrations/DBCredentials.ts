@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import { arg, enumType, extendType, intArg, nonNull, objectType, stringArg } from "nexus";
-import { CustomGraphQLErrors } from '../constants/auth';
-import { hasValidAuthContext } from '../utils/auth';
+import { CustomGraphQLErrors } from '../../constants/auth';
+import { hasValidAuthContext } from '../../utils/auth';
 
 const DBEnumType = enumType({
     name: 'DBType',
