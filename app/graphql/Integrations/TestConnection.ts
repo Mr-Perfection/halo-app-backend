@@ -22,25 +22,12 @@ import { Client } from 'pg';
           const { type, host, port, name, username, password } = args;
           // TODO: type the request to include user.
           //@ts-ignore 
-          const currentUser = context.req.user as User;
-          const dBCredentials = await context.prisma.dBCredentials.create({
-            data: {
-              type,
-              customerId: currentUser.customerId,
-              host,
-              port,
-              name,
-              username,
-              password
-          },
-          });
-
-          const connectionString = `${type.toLowerCase()}://${username}:${password}@${host}:5432/postgres?schema=public`
-          const client = new Client({connectionString });
+        //   const currentUser = context.req.user as User;
+          const connectionString = `${type.toLowerCase()}://${username}:${password}@${host}:${port}/${name}`
+          const client = new Client({ connectionString });
           await client.connect();
           const res = await client.query('SELECT NOW()')
           await client.end()
-          console.log('res', res);
           return true;
         },
       });
