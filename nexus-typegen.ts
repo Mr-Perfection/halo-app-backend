@@ -159,6 +159,7 @@ export interface NexusGenFieldTypes {
     deleteDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
     logout: boolean; // Boolean!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    testDBConnection: boolean; // Boolean!
   }
   Query: { // field return type
     getAllDBCredentials: NexusGenRootTypes['DBCredentials'][]; // [DBCredentials!]!
@@ -210,6 +211,7 @@ export interface NexusGenFieldTypeNames {
     deleteDBCredentials: 'DBCredentials'
     logout: 'Boolean'
     signup: 'AuthPayload'
+    testDBConnection: 'Boolean'
   }
   Query: { // field return type name
     getAllDBCredentials: 'DBCredentials'
@@ -255,6 +257,14 @@ export interface NexusGenArgTypes {
       lastName: string; // String!
       password: string; // String!
       role?: string | null; // String
+    }
+    testDBConnection: { // args
+      host: string; // String!
+      name: string; // String!
+      password: string; // String!
+      port: string; // String!
+      type: NexusGenEnums['DBType']; // DBType!
+      username: string; // String!
     }
   }
   Query: {

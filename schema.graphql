@@ -61,6 +61,7 @@ type Mutation {
   deleteDBCredentials(id: Int!): DBCredentials!
   logout: Boolean!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
+  testDBConnection(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): Boolean!
 }
 
 type Query {

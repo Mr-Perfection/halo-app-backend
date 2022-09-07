@@ -3,7 +3,7 @@ import { arg, enumType, extendType, intArg, nonNull, objectType, stringArg } fro
 import { CustomGraphQLErrors } from '../../constants/auth';
 import { hasValidAuthContext } from '../../utils/auth';
 
-const DBEnumType = enumType({
+export const DBEnumType = enumType({
     name: 'DBType',
     members: ['POSTGRESQL', 'MYSQL'],
     description: 'Type of database credentials that user has.',
