@@ -58,6 +58,9 @@ copilot version: v1.21.0
 
 # Deployment
 ```sh
+# ensure that migrations are up to date. Take a look at DB Migrations section.
+yarn run migrate "add your message"
+
 # Deploy graphql service
 copilot deploy --name graphql
 ```
