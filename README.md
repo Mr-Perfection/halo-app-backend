@@ -87,3 +87,24 @@ https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-graphs-t
 DATABASE_URL= # After running docker containers for databases only, you can grab thr URL. i.e. postgresql://db_user:db_password@localhost:5432/postgres?schema=public
 
 ```
+
+# Connect to test customer AWS RDS
+Ensure that the RDS instance has the following set up:
+* Publicly accessible
+* VPC
+    * Make sure that ACL does not have rules that may block the allowlist ip addreses.
+* Security Group
+    * Add ip addresses that need to be whitelisted in inbound rules.
+
+
+```sh
+# test connection (macOS)
+nc -vz  test-customer-db.cf3evrfkpbgr.us-west-2.rds.amazonaws.com 5432
+# output should show the success message.
+```
+References
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Troubleshooting.html#CHAP_Troubleshooting.Connecting
+https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-connect-outside-vpc/
+https://www.calculator.net/ip-subnet-calculator.html
+https://www.youtube.com/watch?v=PxFZt8MG2ss
+
