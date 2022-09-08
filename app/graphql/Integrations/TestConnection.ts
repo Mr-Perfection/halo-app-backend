@@ -24,7 +24,7 @@ import { Client } from 'pg';
           //@ts-ignore 
         //   const currentUser = context.req.user as User;
           const connectionString = `${type.toLowerCase()}://${username}:${password}@${host}:${port}/${name}`
-          const client = new Client({ connectionString });
+          const client = new Client({ connectionString, connectionTimeoutMillis: 3000 });
           await client.connect();
           const res = await client.query('SELECT NOW()')
           await client.end()
