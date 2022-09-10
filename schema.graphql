@@ -60,6 +60,7 @@ type Mutation {
   createDBCredentials(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): DBCredentials!
   deleteDBCredentials(id: Int!): DBCredentials!
   logout: Boolean!
+  sendQueueItem(data: String!, severity: String!): QueueItem!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
   testDBConnection(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): Boolean!
 }
@@ -71,6 +72,11 @@ type Query {
   getUser: User!
   getUsers: [User!]!
   login(email: String!, password: String!): AuthPayload!
+}
+
+type QueueItem {
+  data: Json!
+  severity: String!
 }
 
 type Ticket {

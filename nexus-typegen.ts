@@ -107,6 +107,10 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Query: {};
+  QueueItem: { // root type
+    data: NexusGenScalars['Json']; // Json!
+    severity: string; // String!
+  }
   Ticket: { // root type
     context: string; // String!
   }
@@ -158,6 +162,7 @@ export interface NexusGenFieldTypes {
     createDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
     deleteDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
     logout: boolean; // Boolean!
+    sendQueueItem: NexusGenRootTypes['QueueItem']; // QueueItem!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     testDBConnection: boolean; // Boolean!
   }
@@ -168,6 +173,10 @@ export interface NexusGenFieldTypes {
     getUser: NexusGenRootTypes['User']; // User!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+  }
+  QueueItem: { // field return type
+    data: NexusGenScalars['Json']; // Json!
+    severity: string; // String!
   }
   Ticket: { // field return type
     context: string; // String!
@@ -210,6 +219,7 @@ export interface NexusGenFieldTypeNames {
     createDBCredentials: 'DBCredentials'
     deleteDBCredentials: 'DBCredentials'
     logout: 'Boolean'
+    sendQueueItem: 'QueueItem'
     signup: 'AuthPayload'
     testDBConnection: 'Boolean'
   }
@@ -220,6 +230,10 @@ export interface NexusGenFieldTypeNames {
     getUser: 'User'
     getUsers: 'User'
     login: 'AuthPayload'
+  }
+  QueueItem: { // field return type name
+    data: 'Json'
+    severity: 'String'
   }
   Ticket: { // field return type name
     context: 'String'
@@ -249,6 +263,10 @@ export interface NexusGenArgTypes {
     }
     deleteDBCredentials: { // args
       id: number; // Int!
+    }
+    sendQueueItem: { // args
+      data: string; // String!
+      severity: string; // String!
     }
     signup: { // args
       customerSlug: string; // String!
