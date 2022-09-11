@@ -67,11 +67,18 @@ type Mutation {
 
 type Query {
   getAllDBCredentials: [DBCredentials!]!
+  getAllQueues: [Queue!]!
   getCustomer(slug: String!): Customer!
   getTicketContext(queries: String!): Ticket!
   getUser: User!
   getUsers: [User!]!
   login(email: String!, password: String!): AuthPayload!
+}
+
+type Queue {
+  createdAt: DateTime
+  name: String!
+  widgetCount: Int!
 }
 
 type QueueItem {

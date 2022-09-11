@@ -107,6 +107,11 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Query: {};
+  Queue: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    name: string; // String!
+    widgetCount: number; // Int!
+  }
   QueueItem: { // root type
     data: NexusGenScalars['Json']; // Json!
     severity: string; // String!
@@ -168,11 +173,17 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     getAllDBCredentials: NexusGenRootTypes['DBCredentials'][]; // [DBCredentials!]!
+    getAllQueues: NexusGenRootTypes['Queue'][]; // [Queue!]!
     getCustomer: NexusGenRootTypes['Customer']; // Customer!
     getTicketContext: NexusGenRootTypes['Ticket']; // Ticket!
     getUser: NexusGenRootTypes['User']; // User!
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+  }
+  Queue: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    name: string; // String!
+    widgetCount: number; // Int!
   }
   QueueItem: { // field return type
     data: NexusGenScalars['Json']; // Json!
@@ -225,11 +236,17 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     getAllDBCredentials: 'DBCredentials'
+    getAllQueues: 'Queue'
     getCustomer: 'Customer'
     getTicketContext: 'Ticket'
     getUser: 'User'
     getUsers: 'User'
     login: 'AuthPayload'
+  }
+  Queue: { // field return type name
+    createdAt: 'DateTime'
+    name: 'String'
+    widgetCount: 'Int'
   }
   QueueItem: { // field return type name
     data: 'Json'

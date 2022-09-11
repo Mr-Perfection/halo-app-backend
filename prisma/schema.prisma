@@ -70,9 +70,10 @@ model Queue {
 model Widget {
   id                Int      @id @default(autoincrement())
   name              String   @unique
-  queueId           Int?
-  queue             Queue?   @relation(fields: [queueId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  queues            Queue[]
   query             String
+  variables         String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt @default(now())
 }
+
