@@ -112,7 +112,7 @@ export interface NexusGenObjects {
     id: number; // Int!
     name: string; // String!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    widgetCount: number; // Int!
+    widgetCount?: number | null; // Int
   }
   QueueItem: { // root type
     data: NexusGenScalars['Json']; // Json!
@@ -167,11 +167,14 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createCustomer: NexusGenRootTypes['Customer']; // Customer!
     createDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
+    createQueue: NexusGenRootTypes['Queue']; // Queue!
     deleteDBCredentials: NexusGenRootTypes['DBCredentials']; // DBCredentials!
+    deleteQueue: NexusGenRootTypes['Queue']; // Queue!
     logout: boolean; // Boolean!
     sendQueueItem: NexusGenRootTypes['QueueItem']; // QueueItem!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     testDBConnection: boolean; // Boolean!
+    updateQueue: NexusGenRootTypes['Queue']; // Queue!
   }
   Query: { // field return type
     getAllDBCredentials: NexusGenRootTypes['DBCredentials'][]; // [DBCredentials!]!
@@ -187,7 +190,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
-    widgetCount: number; // Int!
+    widgetCount: number | null; // Int
   }
   QueueItem: { // field return type
     data: NexusGenScalars['Json']; // Json!
@@ -232,11 +235,14 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createCustomer: 'Customer'
     createDBCredentials: 'DBCredentials'
+    createQueue: 'Queue'
     deleteDBCredentials: 'DBCredentials'
+    deleteQueue: 'Queue'
     logout: 'Boolean'
     sendQueueItem: 'QueueItem'
     signup: 'AuthPayload'
     testDBConnection: 'Boolean'
+    updateQueue: 'Queue'
   }
   Query: { // field return type name
     getAllDBCredentials: 'DBCredentials'
@@ -284,7 +290,13 @@ export interface NexusGenArgTypes {
       type: NexusGenEnums['DBType']; // DBType!
       username: string; // String!
     }
+    createQueue: { // args
+      name: string; // String!
+    }
     deleteDBCredentials: { // args
+      id: number; // Int!
+    }
+    deleteQueue: { // args
       id: number; // Int!
     }
     sendQueueItem: { // args
@@ -306,6 +318,10 @@ export interface NexusGenArgTypes {
       port: string; // String!
       type: NexusGenEnums['DBType']; // DBType!
       username: string; // String!
+    }
+    updateQueue: { // args
+      id: number; // Int!
+      name?: string | null; // String
     }
   }
   Query: {

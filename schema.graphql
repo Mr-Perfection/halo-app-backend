@@ -58,11 +58,14 @@ scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 type Mutation {
   createCustomer(slug: String!): Customer!
   createDBCredentials(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): DBCredentials!
+  createQueue(name: String!): Queue!
   deleteDBCredentials(id: Int!): DBCredentials!
+  deleteQueue(id: Int!): Queue!
   logout: Boolean!
   sendQueueItem(data: String!, severity: String!): QueueItem!
   signup(customerSlug: String!, email: String!, firstName: String!, lastName: String!, password: String!, role: String): AuthPayload!
   testDBConnection(host: String!, name: String!, password: String!, port: String!, type: DBType!, username: String!): Boolean!
+  updateQueue(id: Int!, name: String): Queue!
 }
 
 type Query {
@@ -80,7 +83,7 @@ type Queue {
   id: Int!
   name: String!
   updatedAt: DateTime
-  widgetCount: Int!
+  widgetCount: Int
 }
 
 type QueueItem {
