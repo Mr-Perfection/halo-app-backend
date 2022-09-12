@@ -77,7 +77,9 @@ type Query {
 
 type Queue {
   createdAt: DateTime
+  id: Int!
   name: String!
+  updatedAt: DateTime
   widgetCount: Int!
 }
 

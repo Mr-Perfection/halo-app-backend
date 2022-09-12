@@ -109,7 +109,9 @@ export interface NexusGenObjects {
   Query: {};
   Queue: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
     name: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
     widgetCount: number; // Int!
   }
   QueueItem: { // root type
@@ -182,7 +184,9 @@ export interface NexusGenFieldTypes {
   }
   Queue: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
     name: string; // String!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     widgetCount: number; // Int!
   }
   QueueItem: { // field return type
@@ -245,7 +249,9 @@ export interface NexusGenFieldTypeNames {
   }
   Queue: { // field return type name
     createdAt: 'DateTime'
+    id: 'Int'
     name: 'String'
+    updatedAt: 'DateTime'
     widgetCount: 'Int'
   }
   QueueItem: { // field return type name

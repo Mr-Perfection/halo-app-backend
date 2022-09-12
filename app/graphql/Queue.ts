@@ -19,9 +19,11 @@ export const QueueItem = objectType({
 export const Queue = objectType({
     name: "Queue",
     definition(t) {
+        t.nonNull.int("id");
         t.nonNull.string("name");
         t.nonNull.int("widgetCount");
         t.dateTime("createdAt");
+        t.dateTime("updatedAt");
     },
 });
 
@@ -39,15 +41,19 @@ export const QueueQuery = extendType({
                 where: {
                     customerId: currentUser.customerId,
                 },
-                include: { widgets: true },
+                include: {
+                    _count: {
+                      select: {
+                        widgets: true
+                      }
+                    }
+                  }
               })
 
-            const result = queues.map((queue) => {
-            return { ...queue, widgetCount: queue.widgets.length }
-            })
-
             // TODO: add pagination
-            return result;
+            return queues.map((queue) => {
+              return { ...queue, widgetCount: queue._count.widgets }
+            });
         }
       });
     }
